@@ -117,3 +117,39 @@ let maleUser: Man = {
 	salary: 500_000,
 	workplaceName: "Stanbic IBTC",
 };
+
+// LITERAL TYPE
+// This means that we can set a literal value we expect for a variable just the way we assign types to them.
+// For example:
+
+type Metrics = "inch" | "cm";
+let Measurement: Metrics = "cm";
+// Any value outside inch and cm will be rejected
+
+// NULLABLES
+// In some instance you might want to use a value if available and display a generic text if not available.
+// For instance in the Hello, User on most app
+function GreetUser(user: string | null) {
+	// the null here signifies that the parameter can be passed or not into the function call
+	if (user) console.log("Hello " + user);
+	else console.log("Hola Alien");
+}
+GreetUser(null);
+GreetUser("Segun");
+
+// OPTIONAL CHAINING
+//  there are many cases where you might want to call a variable that might not be available. Rather than using the long if statemement to catch the error, you can use optional chaining
+// This works for properties. eg.
+type Customer = {
+	birthday?: Date;
+};
+
+function getCustomer(id: number): Customer | null {
+	return id === 0 ? null : { birthday: new Date() };
+}
+
+let customer = getCustomer(1);
+// if we try to print the customer customer birthday, it will underline the customer because it might actually be null
+// console.log(customer.birthday);
+// To rectify this, we need to specifically let it only run if the value is not null
+console.log(customer?.birthday?.getFullYear());

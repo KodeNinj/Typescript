@@ -37,4 +37,28 @@ function ConverWeight(weight) {
 }
 console.log(ConverWeight(20));
 console.log(ConverWeight("20kg"));
+let maleUser = {
+    name: "John",
+    age: 20,
+    haveWife: true,
+    noOfKids: 20,
+    ownAhouse: true,
+    gradeLevel: "ABO",
+    salary: 500000,
+    workplaceName: "Stanbic IBTC",
+};
+let Measurement = "cm";
+function GreetUser(user) {
+    if (user)
+        console.log("Hello " + user);
+    else
+        console.log("Hola Alien");
+}
+GreetUser(null);
+GreetUser("Segun");
+function getCustomer(id) {
+    return id === 0 ? null : { birthday: new Date() };
+}
+let customer = getCustomer(1);
+console.log(customer === null || customer === void 0 ? void 0 : customer.birthday.getFullYear());
 //# sourceMappingURL=index.js.map

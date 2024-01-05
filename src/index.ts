@@ -31,11 +31,89 @@ let Sizes: Size = Size.Large;
 console.log(Sizes);
 
 // FUNCTIONS
-function CalcTax(num: number): number {
+function CalcTax(num: number) {
+	// unused parameter can be losely or tightly catched under the tsconfig under
+	// type-checking: noUnusedParameters = false/true
+	// noUnusedLocals is for unused local variable
 	if (num < 5000) {
 		return num * 1000;
 	} else {
 		return num * 500;
-		// if we remove this block, it will underline the type set for the main funtion
+
+		// if we remove this else block, it will underline the type set for the main funtion. This is because of implicit return that occur when num !< 5000. It return undefined. To keep this in-check, configure the tsconfig:noImplicitReturns=true
 	}
 }
+console.log(CalcTax(7000));
+
+// OBJECTS
+// declaration:
+let Human: { id: number; name: string } = { id: 1, name: "John" };
+// The Human object can only accommodate the shape defined in the type-parameter
+// To make a property optional, use ? e.g
+let Human2: { id: number; name?: string } = { id: 1 };
+// Avoid this as iit makes no sense
+
+// Modifiers for parameters
+//  Readonly: If you want to prevent the value of a param from being changed
+let Human3: {
+	readonly id: number;
+	name?: string;
+	// How to initialize methods. If not assigned a value, the object name will be underlined
+	retire: (date: Date) => void;
+} = { id: 1, retire: (date: Date) => console.log(date) };
+
+// ALIASES
+// declaration of the global type aliase
+type Employee = {
+	readonly id: number;
+	name: string;
+	retire: (date: Date) => void;
+};
+// use the template in any object
+let Segun: Employee = {
+	id: 1,
+	name: "Segun",
+	retire: (date: Date) => console.log(date),
+};
+
+// UNION
+// This allows us to set diffeent types to a particualr variable. Let say a variable can either store a number or alphabets.
+function ConverWeight(weight: number | string): number {
+	if (typeof weight === "number") {
+		return weight * 2;
+	} else {
+		return parseInt(weight) * 2;
+	}
+}
+console.log(ConverWeight(20));
+console.log(ConverWeight("20kg"));
+
+//  INTERSECTION
+// Here we use the AND annotation which means the variable must have all the specified types.
+// For example:
+type FatherTrait = {
+	name: string;
+	age: number;
+	haveWife: boolean;
+	noOfKids: number;
+	ownAhouse: boolean;
+};
+type WorkTrait = {
+	gradeLevel: string;
+	salary: number;
+	workplaceName: string;
+};
+// Now these two types can be assigned to one person who is a man
+type Man = FatherTrait & WorkTrait;
+
+// We can now assign the type Man to any man's variable
+let maleUser: Man = {
+	name: "John",
+	age: 20,
+	haveWife: true,
+	noOfKids: 20,
+	ownAhouse: true,
+	gradeLevel: "ABO",
+	salary: 500_000,
+	workplaceName: "Stanbic IBTC",
+};
